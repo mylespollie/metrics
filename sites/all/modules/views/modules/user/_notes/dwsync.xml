@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="views_plugin_row_user_view.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_plugin_argument_validate_user.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_plugin_argument_default_user.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_plugin_argument_default_current_user.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_user_roles.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_user_permissions.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_user_name.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_user_current.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_roles.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_picture.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_permissions.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_name.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_mail.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_link_edit.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_link_cancel.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_link.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user_language.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_user.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_argument_users_roles_rid.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_argument_user_uid.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+</dwsync>

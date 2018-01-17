@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="views_handlers.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_sort_random.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_sort_date.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_sort.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_string.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_numeric.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_in_operator.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_equality.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_date.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_filter_combine.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_xss.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_url.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_math.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_file_size.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_file_extension.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_date.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_custom.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_counter.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field_boolean.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_field.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_argument_string.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_argument_null.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+<file name="views_handler_area_text.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131478855270000000" remote="131478855270000000" Dst="1" />
+</dwsync>

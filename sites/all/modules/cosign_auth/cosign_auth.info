@@ -1,0 +1,7 @@
+﻿; $Id: cosign.info,v 1.4 2008/12/04 19:57:41 ksteinhoff Exp $
+name = Cosign_auth
+description = Replaces user login with Cosign authentication and supplies cosign logout bar
+core = 7.x
+files[] = cosign_auth.module
+
+

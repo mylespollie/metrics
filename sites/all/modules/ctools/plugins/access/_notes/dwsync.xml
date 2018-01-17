@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="term_vocabulary.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="term.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="theme.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="term_has_parent.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="context_exists.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="string_length.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="path_visibility.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node_language.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="compare_users.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="string_equal.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="entity_bundle.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node_comment.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node_access.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="query_string_exists.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node_status.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="front.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="book.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="term_parent.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="role.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="php.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="perm.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="site_language.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="entity_field_value.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+<file name="node_type.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131239825910000000" remote="131239825910000000" Dst="2" />
+</dwsync>

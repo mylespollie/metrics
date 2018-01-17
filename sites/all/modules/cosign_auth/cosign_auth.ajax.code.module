@@ -1,0 +1,1036 @@
+﻿<?php
+// $Id: cosign_auth.module,v 1.9.2.3 2011/04/13 17:24:41 bdr Exp $
+// bdr:  I modified the cosign.module to work with Drupal 7 
+//       Note: this module does not use/depend on webserver_auth module
+//             if a user can authenticate using Cosign, and the user is
+//             found in the "users" table, then the user is permitted
+//             authorized access using the Drupal roles/permissions
+//       all the "// dpm(..." are debugging stmts that can 
+//       be uncommented if necessary
+
+/**
+ * @file
+ * The Cosign Module
+ *
+ * This module manages automatic user login and supplies cosign logout bar.
+ * It depends on the webserver auth module.
+ */
+
+function cosign_auth_init() {
+  global $user;
+
+  //  dpm($_SERVER, 'bdr: cosign_auth_init');
+  if ($_GET['q'] == 'user/logout') {
+    //  dpm($_SERVER, 'bdr: cosign_auth_init **LOGOUT**');
+    cosign_auth_logout();
+    return TRUE;
+  }
+
+  // bdr: D7 changes to simplify things
+  if ($user->uid) {
+
+  //begin added code
+  // Make sure we get the remote user whichever way it is available.
+  if (isset($_SERVER['REDIRECT_REMOTE_USER'])) {
+    $cosign_auth_name = $_SERVER['REDIRECT_REMOTE_USER'];
+  }
+  elseif (isset($_SERVER['REMOTE_USER'])) {
+    $cosign_auth_name = $_SERVER['REMOTE_USER'];
+  }
+  //ldap check from Schleif
+  //cosign_auth_assign_ldap($username, $ldapGroup, $drupalRole);
+  if ((strpos($_SERVER['SERVER_NAME'],'developer.it') !== false)) {
+	cosign_auth_assign_ldap($cosign_auth_name, 'ITS.AllStaff', 'ITS AllStaff');
+	cosign_auth_assign_ldap($cosign_auth_name, 'Campus Web Services', 'ITS AllStaff');
+	cosign_auth_assign_ldap($cosign_auth_name, 'Developer it Guests', 'guest');
+  }	 	 
+  //end added code
+  
+	 // Do nothing: user already logged in Drupal with session data matching
+     //  dpm($user, 'bdr: cosign_auth_init ***ALREADY LOGGED IN USER DO NOTHING***');
+     return TRUE;
+  }
+
+  //  dpm($_SERVER, 'bdr: cosign_auth_init ** PERFORM LOGIN **');
+  $cosign_auth_name = '';
+
+  // Make sure we get the remote user whichever way it is available.
+  if (isset($_SERVER['REDIRECT_REMOTE_USER'])) {
+    $cosign_auth_name = $_SERVER['REDIRECT_REMOTE_USER'];
+  }
+  elseif (isset($_SERVER['REMOTE_USER'])) {
+    $cosign_auth_name = $_SERVER['REMOTE_USER'];
+  }
+
+  // Perform some cleanup so plaintext passwords aren't available 
+  unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+  if (!empty($cosign_auth_name)) {
+         //  dpm($cosign_auth_name, 'bdr: cosign_auth_init ***COSIGN-NAME***');
+      // Retrieve user credentials
+      $result = db_select('users', 'u')
+                  ->fields('u', array('uid', 'name'))
+                  ->condition('name', $cosign_auth_name, '=')
+                  ->execute();
+      $user_info = $result->fetchObject();
+
+      /***********************************************************
+      * bdr - at this point, we have a valid cosign user who
+      *       is "authorized" to use Drupal if the user
+      *       is in the "users" table. If not, show the Drupal node
+      *       chosen in the Cosign Admin Menu
+      **********************************************************/
+      if (empty($user_info)) {
+          // dpm($user, 'bdr: cosign_auth_init ***USER-INFO-NO-USER-FOUND***');
+		  
+		  //Schleif edit - we don't care if they're in the users table, so
+		  //if you pass Cosign, you just get added to it, so we can pass
+		  //through authentication.
+          
+		  //Commented out next three lines (Schleif)
+		  //$default_invalid_logout = 'user/logout';
+          //$invalid_login = variable_get('cosign_auth_invalid_login', $default_invalid_logout);
+          //drupal_goto($invalid_login);
+		  
+ 
+		//Schleif code
+    	//generate a password (nobody will ever actually use it, though)
+		$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+    	srand((double)microtime()*1000000);
+    	$i = 0;
+    	$pass = '' ;
+
+	    while ($i <= 7) {
+    	    $num = rand() % 33;
+       	 $tmp = substr($chars, $num, 1);
+       	 $pass = $pass . $tmp;
+       	 $i++;
+    	}
+
+		$new_user = array(
+			'name' => $cosign_auth_name,
+			'pass' => $pass,
+			'mail' => $cosign_auth_name."@umich.edu",
+			'init' => $cosign_auth_name."@umich.edu",
+			'field_firstname' => array('und' => array('0' => array('value' => 'test'))),
+			'field_lastname' => array('und' => array('0' => array('value' => 'test'))),
+			//'field_city' => array('und' => array('0' => array('value' => 'Ann Arbor'))),
+			//'field_country' => array('und' => array('0' => array('value' => 'USA'))),
+			'status' => 1,
+			'roles' => array(DRUPAL_AUTHENTICATED_RID => TRUE),
+			'access' => time(),
+		);
+		//add user
+		$account = user_save(NULL, $new_user);		  
+		
+		//add/generate session info
+		$user = user_load_by_name($cosign_auth_name);
+		drupal_session_regenerate();
+		//end Schleif code
+
+//ldap check from Schleif
+//cosign_auth_assign_ldap($username, $ldapGroup, $drupalRole);
+if ((strpos($_SERVER['SERVER_NAME'],'developer.it') !== false)) {
+cosign_auth_assign_ldap($cosign_auth_name, 'ITS.AllStaff', 'ITS AllStaff');
+cosign_auth_assign_ldap($cosign_auth_name, 'Campus Web Services', 'ITS AllStaff');
+cosign_auth_assign_ldap($cosign_auth_name, 'Developer it Guests', 'guest');
+}
+
+
+
+       } 
+      else {
+           //  dpm($user, 'bdr: cosign_auth_init ***USER_EXTERNAL_LOAD***');
+           $user = user_load_by_name($cosign_auth_name);
+
+           /***************************************************************
+            * bdr - added this line so only 1 web page "refresh" was needed
+            *    to format the "admin_menu" correctly after cosign login
+            ****************************************************************/
+            
+			//ldap check from Schleif
+			//cosign_auth_assign_ldap($username, $ldapGroup, $drupalRole);
+			if ((strpos($_SERVER['SERVER_NAME'],'developer.it') !== false)) {
+			cosign_auth_assign_ldap($cosign_auth_name, 'ITS.AllStaff', 'ITS AllStaff');
+			cosign_auth_assign_ldap($cosign_auth_name, 'Campus Web Services', 'ITS AllStaff');
+			cosign_auth_assign_ldap($cosign_auth_name, 'Developer it Guests', 'guest');
+			}
+			drupal_session_regenerate();
+      }
+  }
+  return TRUE;
+}
+
+// this is not a hook!  Defines the admin form which is referenced in the _menu hook.
+function cosign_auth_admin() {
+  // bdr: I replaced this line out because at UMich, we always use cosign server
+  $logout_machine = 'https://weblogin.umich.edu/cgi-bin/logout';
+  // $logout_machine = 'https://' . $_SERVER['SERVER_NAME'];
+  $script_path = '/cgi-bin/logout';
+  $logout_path = $logout_machine . $script_path;
+  $form['cosign_auth_logout_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Logout Path'),
+    '#default_value' => variable_get('cosign_auth_logout_path', $logout_path),
+    '#size' => 80,
+    '#maxlength' => 200,
+    '#description' => t("The address (including http(s)) of the machine and script path for logging out."),
+  );
+
+  $logout_to =  'http://' . $_SERVER['SERVER_NAME'] . base_path();
+  $form['cosign_auth_logout_to'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Logout to'),
+    '#default_value' => variable_get('cosign_auth_logout_to', $logout_to),
+    '#size' => 80,
+    '#maxlength' => 200,
+    '#description' => t("The address to redirect users to after they have logged out."),
+  );
+
+  $invalid_login = 'http://' . $_SERVER['SERVER_NAME'] . base_path() . "invalidlogin";
+  $form['cosign_auth_invalid_login'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Page displayed for unAuthorized Cosign User'),
+    '#default_value' => variable_get('cosign_auth_invalid_login', $invalid_login),
+    '#size' => 80,
+    '#maxlength' => 200,
+    '#description' => t("The address of the server and page name displayed for unauthorized Cosign user. <b>***NOTE*** you MUST create this page!</b>"),
+  );
+
+  return system_settings_form($form);
+}
+
+function cosign_auth_menu() {
+  $items['admin/config/system/cosign'] = array(
+  // $items['admin/cosign'] = array(
+    'title' => 'Cosign_Auth',
+    'description' => 'Control the Cosign_auth module behavior',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cosign_auth_admin'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/***********************************************************
+ * bdr - comment out some code here to that the Drupal
+ *       app can "add a user".  This does not add an user
+ *       to the Kerberos database, just to the Drupal app
+ *       for authorization purposes.
+ **********************************************************/
+function cosign_auth_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == "user_admin_settings" && isset($form['registration'])) {
+    $form['registration']['#title'] = t( $form['registration']['#title'] ) . " (disabled by the cosign module) ";
+    $form['registration']['#collapsible'] = TRUE;
+    $form['registration']['#collapsed'] = TRUE;
+    $form['registration']['user_register']['#default_value'] = 1;
+    $form['email']['#title'] = t( $form['email']['#title'] ) . " (disabled by the cosign module) ";
+    $form['email']['#collapsible'] = TRUE;
+    $form['email']['#collapsed'] = TRUE;
+    foreach ($form['registration'] as $k => $item) {
+      if (is_array($item)) {
+        $form['registration'][$k]['#disabled'] = TRUE;
+      }
+    }
+    foreach ($form['email'] as $k => $item) {
+      if (is_array($item)) {
+        $form['email'][$k]['#disabled'] = TRUE;
+      }
+    }
+  }
+
+  if ($form_id == "user_login_block") {
+	  
+	if (strpos($_SERVER['SERVER_NAME'], "safecomputing.umich.edu") === false) {$form['#action'] = '/user/login';}
+	else {$form['#action'] = '?q=user/login';}
+    
+    unset($form['name']);
+    unset($form['pass']);
+    unset($form['submit']);
+    $form['links']['#value'] = '<a href="https://' . $_SERVER['HTTP_HOST'] . request_uri() . '">Login</a>';
+  }
+
+   if ($form_id == "user_login") {
+	   //$_SERVER["HTTP_X_FORWARDED_HOST"]
+	   //$_SERVER['SERVER_NAME']
+	   //https://issues.apache.org/bugzilla/show_bug.cgi?id=44614
+     drupal_goto('https://' . $_SERVER['SERVER_NAME'] . base_path());
+   }
+
+  if ($form_id == "user_profile_form") {
+    if (isset($form['account']['name'])) {
+      $form['account']['name']['#type'] = 'hidden';
+    }
+    unset($form['account']['pass']);
+  }
+  
+
+//Form states added by Schleif for Service Offering content type
+  if ($form_id == "service_offering_node_form") {
+	
+//states
+$form['field_link_to_separate_site']['#states'] = array(
+    'visible' => array(
+     ':input[name="field_about_information_location[und]"]' => array('value' => t('otherSite')),
+    ),
+  );
+  
+$form['field_nonportal_web_app_link']['#states'] = array(
+    'visible' => array(
+     ':input[name="field_web_accessible[und]"]' => array('value' => t('yes')),
+    ),
+  );  
+  
+$form['field_request_button_link']['#states'] = array(
+    'visible' => array(
+     ':input[name="field_requested_via_portal[und]"]' => array('value' => t('yes')),
+    ),
+  );
+//Overview
+$form['field_overview']['#states'] = array(
+    'visible' => array(
+    ':input[name="field_about_information_location[und]"]' => array('value' => t('portal')),
+    ),
+  ); 
+//Service Expectations  
+$form['field_service_expectations']['#states'] = array(
+    'visible' => array(
+    ':input[name="field_about_information_location[und]"]' => array('value' => t('portal')),
+    ),
+  ); 
+//Getting Started
+$form['field_collection_getting_started']['#states'] = array(
+    'visible' => array(
+    ':input[name="field_about_information_location[und]"]' => array('value' => t('portal')),
+    ),
+  );
+//Resources   
+$form['field_so_resources']['#states'] = array(
+    'visible' => array(
+    ':input[name="field_about_information_location[und]"]' => array('value' => t('portal')),
+    ),
+  );      
+                
+  }
+//end states code
+
+
+
+
+
+//mrschlei - 10.22.2012
+//attaching the add_service_to_sens_data function (in this module - below) to the submit actions...
+	if ($form_id == 'service_node_form') {
+		$form["#submit"][] = "add_service_to_sens_data";	
+	}  
+
+
+
+
+//AJAX TESTING
+//This and the cosign_auth_autocheckboxes_callback below (near the bottom) 
+//should be in a custom module, not here
+	if ($form_id == "application_or_service_node_form") {
+		//https://drupal.org/node/752056
+		$form['field_domain_category_fc']['und'][0]['field_domain_fc']['und']['#ajax'] = array(
+      		'callback' => 'cosign_auth_autocheckboxes_callback',
+      		'wrapper' => 'edit-field-domain-category-fc-und-0-field-category-fc-und',
+      		'method' => 'replace',
+      		'effect' => 'fade',
+		);
+		
+
+ 	//if there's something selected in the Domain field in the Domain and Category Field Collection...
+	 if (isset($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"])) {
+	
+	  $options = array();  
+	  
+	  for ($k=0;$k <= count($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"]);$k++) {
+		 
+		 if ($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"][$k]["value"] == "Administration")
+		 {
+		 	$options['Asset Management'] = "Asset Management";
+			$options['Facilities Management'] = "Facilities Management";
+			$options['Financial Management'] = "Financial Management";
+			$options['Human Resources Management'] = "Human Resources Management";
+			$options['IT Management'] = "IT Management";
+			$options['Student Administration'] = "Student Administration";
+			$options['Collaboration and Communication'] = "Collaboration and Communication";
+		 }
+		 else if ($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"][$k]["value"] == "Knowledge")
+		 {
+		 	$options['Curate'] = "Curate";
+			$options['Preserve'] = "Preserve";
+			$options['Search'] = "Search";
+		 }	
+		 else if ($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"][$k]["value"] == "Research")
+		 {
+		 	$options['Discovery'] = "Discovery";
+			$options['Collaboration and Communication'] = "Collaboration and Communication";
+		 }	
+		 else if ($form_state["values"]["field_domain_category_fc"]["und"][0]["field_domain_fc"]["und"][$k]["value"] == "Teaching and Learning")
+		 {
+		 	$options['Cloud Storage (for course materials)'] = "Cloud Storage (for course materials)";
+			$options['Collaboration'] = "Collaboration";
+			$options['Data Analytics'] = "Data Analytics";
+			$options['e-textbook / Online Course Materials'] = "e-textbook / Online Course Materials";
+			$options['Learning Management System'] = "Learning Management System";
+			$options['Lecture Capture'] = "Lecture Capture";
+			$options['Online Instruction'] = "Online Instruction";
+			$options['Portfolio'] = "Portfolio";
+			$options['Research and Search'] = "Research and Search";
+			$options['Response Systems'] = "Response Systems";
+			$options['Social Media'] = "Social Media";
+			$options['Testing / Grading / Assessment'] = "Testing / Grading / Assessment";
+			$options['Web conferencing'] = "Web conferencing";
+		 }			 
+	}
+	  
+	  ob_start();
+	  var_dump($form['field_domain_category_fc']['und'][0]['field_category_fc']['und']['#options']);
+	  $result = ob_get_clean();
+	  //mail("mrschlei@umich.edu","Data",$result);
+	  
+	  
+	  //ob_start();
+	  //var_dump($options);
+	  //$result = ob_get_clean();
+	  //mail("mrschlei@umich.edu","Options",$result);
+	 
+	 
+	  //a written translation of the code below:
+	  //within the domain category field collection of fields (which have an undefined language), 
+	  //there is a field of the name field_category_fc, also of undefined language, 
+	  //and we'd like to do stuff to it's options:
+		
+		$form['field_domain_category_fc']['und'][0]['field_category_fc']['und']['#options'] = $options;
+
+	  
+		//return $form;
+	  }
+	  //return $form;
+	}
+//END AJAX TESTING
+
+
+
+//end form_alter
+}
+
+function cosign_auth_help($path, $arg) {
+  switch ($path) {
+    case 'admin/modules#description':
+      return t("Allows users to authenticate via Cosign.");
+
+    case "admin/help#cosign":
+      return '<p>' . t("Allows users to authenticate via Cosign") . '</p>';
+  }
+}
+
+function cosign_auth_logout() {
+  global $user;
+  /***********************************************
+   * bdr - since it is possible to have valid    *
+   *    cosign login but not be in the "users"   *
+   *    table, one might need to do a cosign     *
+   *    logout but not possess a Drupal "session *
+   *    so check before doing a session_destroy  *
+   **********************************************/
+  // Destroy the current session:
+  if (isset($user)) {
+    session_destroy();
+    $_SESSION = array();
+  }
+
+  module_invoke_all('user', 'user/logout', NULL, $user);
+
+  // Load the anonymous user
+  $user = drupal_anonymous_user();
+
+  $default_logout_path = 'https://' . $_SERVER['SERVER_NAME'] . '/cgi-bin/logout';
+  $default_logout_to =   'http://' . $_SERVER['SERVER_NAME'] . base_path();
+
+  $logout_path = variable_get('cosign_auth_logout_path', $default_logout_path);
+  $logout_to = variable_get('cosign_auth_logout_to', $default_logout_to);
+
+  drupal_goto($logout_path . '?' . $logout_to);
+
+  return TRUE;
+}
+
+function cosign_auth_block_info() {
+  global $user;
+  $blocks['cosign'] = array(
+      'info' => t('Cosign status and logout'),
+  ); 
+  return $blocks; 
+}
+
+function cosign_auth_disable() {
+  //  dpm($_SERVER, 'bdr: cosign_auth_disable');
+  $module = 'cosign';
+
+  db_update('system')
+      ->fields(array(
+            'status' => 0,
+      ))
+      ->condition('type', 'module')
+      ->condition('name', $module)
+      ->execute();
+  drupal_set_message(t('Cosign module has been disabled'));
+}
+
+function cosign_auth_enable() {
+  //  dpm($_SERVER, 'bdr: cosign_auth_enable');
+  $errmsg = '';
+  $realm = '';
+
+  if (isset($_SERVER['REMOTE_REALM'])) {
+    $realm = '@' . $_SERVER['REMOTE_REALM'];
+  }
+
+  // This is a fresh install, don't bother copying users
+  if (basename($_SERVER['SCRIPT_NAME']) == "install.php") {
+    drupal_set_message(t('Cosign module has been enabled'));
+  }
+  return TRUE;
+}
+
+
+//also not a hook
+//added by Schleif
+//the D7 LDAP module wasn't working and we needed an immediate solution
+//so, this directly looks up users and assigns roles based on very
+//specific conditions.  Hopefully, the LDAP module will get fixed eventually.
+function cosign_auth_assign_ldap($user, $role_name, $ldapgroup) {
+	
+	$userinfo = user_load_by_name($user);
+	$userid = $userinfo->uid;
+	
+$ldaphost = "ldap.umich.edu";  // your ldap servers
+$ldapport = 389;                 // your ldap server's port number
+
+// Connecting to LDAP
+$ldapconn = ldap_connect($ldaphost, $ldapport)
+          or die("Could not connect to $ldaphost");
+		  
+if ($ldapconn) {
+	
+	$ldapbind = ldap_bind($ldapconn);
+	
+		if ($ldapbind) {
+			
+			$dn = "ou=User Groups,ou=Groups,dc=umich,dc=edu";
+			//ITS AllStaff
+			$query = "(&(cn=".$ldapgroup.")(member=uid=".$user.",ou=People,dc=umich,dc=edu))";
+
+			
+			$result = ldap_search($ldapconn, $dn, $query);
+			
+			$ldapcount = ldap_count_entries($ldapconn,$result);
+			
+			if ($ldapcount > 0) {
+				//http://www.computerminds.co.uk/articles/quick-tips-adding-role-user-drupal-7
+					
+				if ($role = user_role_load_by_name($role_name)) {
+					
+					// Get the rid from the roles table.
+					$rid = $role->rid;
+					
+
+					$key = array_search($role_name, $userinfo->roles);
+  						if ($key == FALSE) {
+    						if ($rid != FALSE) {
+     							$new_role[$rid] = $role_name;
+      							$all_roles = $userinfo->roles + $new_role; // Add new role to existing roles.
+      							user_save($userinfo, array('roles' => $all_roles));
+								//user_access('API or Web Service: Edit own content', $user, TRUE); // reset the permissions cache
+
+    						}
+  						}
+					
+					//watchdog log
+					watchdog('LDAP-Role Log', 'Assigned '.$role->rid.' to userid: '.$userid, array(), WATCHDOG_DEBUG);	
+				}	
+			}
+			else {
+				watchdog('LDAP-Role Log', 'No role assigned to user '.$user, array(), WATCHDOG_DEBUG);	
+			}
+		}
+	}	
+}
+
+/**SEARCH HOOKS...**/
+function cosign_auth_search_info() {
+	return array(
+		'title'=>'IT Documentation',
+	);
+}
+
+function cosign_auth_search_reset() {
+	variable_del('cosign_auth_cron_last_change');
+	variable_del('cosign_auth_cron_last_id');
+	return;
+}
+
+function cosign_auth_update_shutdown() {
+	global $last_change, $last_id;
+	if ($last_change && $last_id) {
+		variable_set('cosign_auth_cron_last_change', $last_change);
+		variable_set('cosign_auth_cron_last_id', $last_id);		
+	}
+}
+
+function cosign_auth_update_index() {
+	global $last_change, $last_id;
+	
+	register_shutdown_function('cosign_auth_update_shutdown');
+	
+	$last_id = variable_get('cosign_auth_cron_last_id',0);
+	$last_change = variable_get('cosign_auth_cron_last_change',0);
+	
+$pos = strpos($_SERVER['HTTP_HOST'], "services");						
+if ($pos !== false) {		
+	
+	$docs = array();
+	$dbdata = array();
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$order_by = array("nickname", "nickname desc", "title", "title desc");
+$sort = 2;
+include "/afs/umich.edu/group/itd/itcsweb/Public/html/itcsdocs/db-inc.php";
+$i = 0;
+$sql = OCIParse($db, "select title, url, lower(nickname) as nickname from itcsdocs where status = 'public' order by $order_by[$sort]");
+OCIExecute ($sql);
+	while(OCIFetchInto($sql, $line, OCI_ASSOC+OCI_RETURN_NULLS))
+	{
+		foreach($line as $key => $value)
+		{
+			$field = strtolower($key);
+			$$field = $value;
+		}
+		
+
+echo "nickname: ".strtoupper($nickname); 
+echo "URL: ".$url; 
+echo "Title: ".$title; 
+
+
+if ($url != "") {
+
+$url = str_replace("http://www.itcs.umich.edu","",$url);
+if (!strstr($url,".html")) {$url = $url."/index.html";}
+
+if ($body = implode('', file("/afs/umich.edu/group/itd/itcsweb/Public/html/".$url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))) 
+{
+
+
+
+//get iterating $i, s123123 code, doc title, and doc body:
+array_push($dbdata, array($i, $nickname, $title, $body));
+
+						//update ye olde search indexer
+						$last_change = date("Y-m-d H:i:s");
+						$last_id = $i;
+						//having trouble with href's breaking the function, so strip_tags....
+						search_index($i,'cosign_auth',strip_tags($body, '<p><strong><em><h1><h2><h3><h4>'));
+						variable_set('cosign_auth_cron_last_change',$last_change);
+						variable_set('cosign_auth_cron_last_id',$last_id);
+						
+}//end if ($body = implode('...
+
+}//end if ($url != "") {
+
+$i++;
+}//end Oracle query while
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+										
+					
+						
+//TURN BACK ON FOR TESTING			
+//db_insert('search_itcsdocs')->fields(array('id' => $i,'weirdcode' => $weirddoccode,'title' => $doctitle,'body' => $body2,))->execute();
+
+					
+				}
+	
+}
+
+function cosign_auth_search_execute($keys=NULL) {
+	
+	//cron runs @ 12:03am every day, but that info is far, far away, so we'll fake it.
+	$timetest = (((date("G")*3600) + (date("i")*60)) - 180);
+	$legacy_url = 'http://itcs.umich.edu/itcsdocs/';
+	$url = "";
+	$title = "";
+	$snippet = "";
+	$urls = array();
+	
+	$query = db_select('search_index','i')->extend('SearchQuery')->extend('PagerDefault');
+	//$query->join('search_itcsdocs','t','t.id = i.sid');
+	$query -> searchExpression($keys, 'cosign_auth');
+	
+	if (!$query->executeFirstPass()) {
+		return array();
+	} 
+	
+	$found = $query->limit(20)->execute();
+	
+	foreach ($found as $item) {
+	
+		$sid = $item->sid;		
+		
+		$result = db_query('SELECT n.weirdcode, n.body, n.title, n.id FROM {search_itcsdocs} n WHERE n.id = :sid', array(':sid' => $sid));
+		foreach ($result as $record) {
+			$clean = preg_replace('~<\s*\bscript\b[^>]*>(.*?)<\s*\/\s*script\s*>~is', '', $record->body);
+			$timetest = $timetest + rand(0,300);
+			
+			$url = $legacy_url.strtolower($record->weirdcode);
+			$title = $record->title;
+			$body = strip_tags($clean);
+			$snippet = substr($body,strrpos($body,$keys),300)."...";
+		}		
+		
+		//echo "test: ".$item->sid."<br />";
+		if (!in_array($url, $urls)) { 
+		array_push($urls, $url);
+		
+		$results[] = array(
+			'link' => url($url),
+			'type' => t('test'),
+			'title' => $title,
+			'date' => time()-$timetest,
+			'snippet' => $snippet);
+		}
+	}
+	return $results;
+}
+
+
+
+function cosign_auth_cron() {
+
+if (!strpos($_SERVER['HTTP_HOST'],'services') == false)
+{
+	 $now = time();
+	 $now_nice = date("Ymd");
+	 //604800 is a week of seconds
+	 //86400 is a day of seconds
+	 $lastweek = $now-604800;
+	 $lastweek_nice = date("Ymd",$lastweek);
+
+$lastemail = db_query("SELECT * FROM {zero_search_email_tracker} ORDER BY `stamp` DESC LIMIT 1");	
+foreach ($lastemail as $record) {
+		$lastrun = $record->last_run;
+	}	
+	//echo "<br />lastrun: ".$lastrun;
+	$diff = $lastrun-(date("Ymd",$lastweek));
+
+if ($diff <= 0) {	
+  // Fetch data from other sites.
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+// Additional headers
+$headers .= 'From: Drupal Cron Test';
+  
+$body = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<title>Drupal Search Report</title>
+</head>
+
+<body style='font-size:12px;font-family:Arial, Helvetica, sans-serif;'>
+<p>Last run: $lastrun</p>
+<p>These are the # of keyword searches returning 0 results performed on <a href='http://services.it.umich.edu'>the Services Portal</a> in the last <strong>7 days</strong>.</p>
+<table border='1' cellpadding='4'><tr><th>Query</th><th>Module</th><th>Counter</th></tr>";
+  
+$result = db_query("SELECT `q`, `module`, `result`, `day`, `counter` FROM {search_log} WHERE `result` = '-1' ORDER BY `counter` DESC");
+
+// Result is returned as a iterable object that returns a stdClass object on each iteration
+foreach ($result as $record) {
+  //$queue = DrupalQueue::get('weekly_email');
+  //  $queue->createItem($item);
+	if ($record->day > $lastweek) { 
+
+		$body .= "<tr><td>".$record->q."</td><td>".$record->module."</td><td>".$record->counter."</td></tr>";  
+  }
+   
+}
+$body .= "</table></body></html>";
+$body= wordwrap($body,900, "\n");  
+  //service-portal-null-searches
+ if (mail("service-portal-null-searches@umich.edu","Zero Search Results for Services Portal",$body,$headers))
+ 	{
+		watchdog('mail log', 'Cron email sent', array(), WATCHDOG_DEBUG);
+	}
+ else {
+		watchdog('mail log', 'Cron email ERROR', array(), WATCHDOG_DEBUG);
+	} 
+ 
+ 
+$insert_last_run = db_insert('zero_search_email_tracker')
+->fields(array(
+  'last_run' => $now_nice,
+))
+->execute();
+}
+}//end services.it check
+}
+
+
+/**
+ * Implements hook_node_insert().
+ */
+function cosign_auth_node_insert ($node) {
+
+	if ($node->type == "service") {
+		
+		
+		
+		$title = $node->title;
+		$service = $title;
+		$nid = $node->nid;
+		
+		//this code is replicated elsewhere in this file... should probably be a function....
+		$fieldname = strtolower($title);
+		$fieldname = preg_replace("/[^a-zA-Z 0-9]+/", " ", $fieldname);
+		$fieldname = str_replace(" ", "_", $fieldname);
+		$fieldname = "prog_".$fieldname;
+	
+	
+		if (strlen($fieldname) > 30) {
+			$fieldname = substr($fieldname, 0, 29);
+		}
+		
+		//write title, fieldname, and nid to db for later reference		
+		db_insert('service_info')->fields(array('nid' => $nid,'fieldname' => $fieldname,'title' => $title))->execute();
+
+		//email Mike....
+		//ob_start();
+		//var_dump($node);
+		//$body = ob_get_clean();
+
+		//$body = wordwrap($body,900, "\n");
+		//mail("mrschlei@umich.edu","more field testing",$body);
+		
+		
+				
+		
+	}	
+
+}
+
+
+
+
+
+/**
+ * Implements hook_node_update().
+ */
+function cosign_auth_node_update ($node) {
+	if ($node->type == "service") {
+		$title = $node->title;
+		$nid = $node->nid;
+		$is_published = $node->status;
+
+
+		//update the middle man DB with the new title, for consistency
+		db_update('service_info')->fields(array('title' => $title))->condition('nid', $nid, '=')->execute();
+		
+		//update the field label with the new title
+	$quickquery = db_query("SELECT * FROM {service_info} WHERE `nid` = :nid LIMIT 1", array(':nid' => $nid));			
+	foreach ($quickquery as $record) {
+		$fieldname = $record->fieldname;	
+	}		
+		
+      $instance = field_read_instance("node", $fieldname, 'sensitive_data');
+      
+	  if ($instance) {
+	  $instance['label'] = $title;
+      field_update_instance($instance);		
+	  }
+	  else {
+		watchdog('Following Node Update Log', "No fieldname! $fieldname : $nid", array(), WATCHDOG_DEBUG);  
+	  }	
+	
+}//end if ($node->type == "service")
+}//end function
+
+
+
+
+/**
+ * Implements hook_node_delete().
+ */
+function cosign_auth_node_delete ($node) {
+
+	if ($node->type == "service") {
+	//mail("mrschlei@umich.edu","pre-delete object",serialize($node));
+	$nid = $node->nid;
+	$quickquery = db_query("SELECT * FROM {service_info} WHERE `nid` = :nid LIMIT 1", array(':nid' => $nid));
+	
+		foreach ($quickquery as $record) {
+			//mail("mrschlei@umich.edu","SQL query",serialize($record));
+			$fieldname = $record->fieldname;
+		}
+
+		$myField_name = $fieldname;
+		
+		if (field_info_field($myField_name)) {
+			//remove field from the Service Data content type:
+			watchdog('Following Node Delete Log', "Found that field instance - deleting now.", array(), WATCHDOG_DEBUG);
+			field_delete_field($myField_name);
+		}	
+		else {
+			watchdog('Following Node Delete Log', "No field instance found.", array(), WATCHDOG_DEBUG);	
+		}
+		
+		//delete {service_info} row for that node
+		db_delete('service_info')->condition('nid', $nid)->execute();	
+	}
+}
+
+
+
+
+
+//added by mrschlei 10/24/2012
+//When Service form submit (see reference to this function above), look up all 'service' content types,
+//get the titles, create fields for them, add them to a pre-defined group, and sort them.
+//Fields are removed from the group on Service deletion - see cosign_auth_node_delete.
+function add_service_to_sens_data($form, &$form_state) {
+
+$service = $form['title']['#value'];
+
+//I heard you like arrays, so I put arrays in your arrays are more arrayed:
+$is_published = $form["additional_settings"]['group']["#groups"]["additional_settings"][2]["status"]["#value"];
+
+//ob_start();
+//var_dump($form);
+//$body = ob_get_clean();
+
+//$body = wordwrap($body,900, "\n");
+//mail("mrschlei@umich.edu","some field data",$is_published);
+
+
+	if ($is_published === 1) {
+		create_a_field($service);
+		reorder_services_group();
+		watchdog('Add Service to Sens Data Log', $service." addded.", array(), WATCHDOG_DEBUG);		
+	}
+}
+
+
+//also not a hook - added to pull out the field creation logic
+function create_a_field ($service) {
+
+	//make the titles into proper field names
+	//this code is duplicated above, so changes must be made in tandem - i should write a function for this, probably.
+	$fieldname = strtolower($service);
+	$fieldname = preg_replace("/[^a-zA-Z 0-9]+/", " ", $fieldname);
+	$fieldname = str_replace(" ", "_", $fieldname);
+	$fieldname = "prog_".$fieldname;
+	if (strlen($fieldname) > 30) {
+		$fieldname = substr($fieldname, 0, 29);
+	}
+
+    $myField_name = $fieldname;
+    if(!field_info_field($myField_name)) // check if the field already exists.
+    {
+        $field = array(
+            'field_name'    => $myField_name,
+            'type'          => 'list_text',
+			'weight'          => 10,
+			'settings'	=> array(
+     	 	'allowed_values' => array('Not Permitted' => 'Not Permitted', 'With Approval' => 'With Approval', 'Permitted' => 'Permitted'),
+    ));
+        field_create_field($field);
+
+        $field_instance = array(
+            'field_name'    => $myField_name,
+			'label' => $service,
+			'title' => $service,
+            'entity_type'   => 'node',
+			'default_value' => '',
+            'bundle'        => 'sensitive_data',
+            //'label'         => t('Select an image'),
+            'description'   => t(''),
+            'widget'        => array(
+                'type'      => 'options_buttons',
+                'weight'    => 10,
+            ),
+			'properties' => array( 
+				'filter_xss' => 1,
+				'strip_tags' => '',
+				'empty_option' => '', 
+				'optgroups' => ''
+			), 			
+			"value_key" => "value",
+        );
+        field_create_instance($field_instance);
+		
+		
+		//add new fields to the Service Applicability Field Group
+		$groups = field_group_read_groups(array(
+			'name' => 'node',
+			'bundle' => 'sensitive_data',
+			'view_mode' => 'full'));
+		
+		if ($groups['node']['sensitive_data']['form']['group_data_service_applicability']) {
+			$your_group = $groups['node']['sensitive_data']['form']['group_data_service_applicability'];
+			$your_group->children[] = $myField_name;
+			field_group_group_save($your_group);		
+		}
+		else {drupal_set_message("Group error!!");}
+        //drupal_set_message("Fields created successfully!");
+    }
+}
+
+
+function reorder_services_group() {
+	
+//sort the fields within the parent Field Group...
+		$kids = array();
+		$groups = field_group_read_groups(array(
+			'name' => 'node',
+			'bundle' => 'sensitive_data',
+			'view_mode' => 'full'));
+		
+		if ($groups['node']['sensitive_data']['form']['group_data_service_applicability']) {
+			//$kids = $groups['node']['sensitive_data']['form']['group_data_service_applicability']->children;
+			foreach ($groups['node']['sensitive_data']['form']['group_data_service_applicability']->children as $kid) {
+				array_push($kids, $kid);
+				//echo $kid;
+			}
+			//sort the kids!
+			sort($kids);
+			$w = 0;
+			foreach ($kids as $kid) {
+				//assign the kids weights
+				if ($instance = field_read_instance('node', $kid, 'sensitive_data')) {
+					$instance['widget']['weight'] = $w;
+					field_update_instance($instance);
+					$w++;
+			}}
+			
+		}
+		
+}
+
+//we're testing ajax jazz:
+/**
+ * AJAX-enabled select element causes replacement of a set of checkboxes
+ * based on the selection.
+ */
+
+
+function cosign_auth_autocheckboxes_callback($form, $form_state) {
+  return $form['field_domain_category_fc']['und'][0]['field_category_fc']['und'];
+}
+//END TESTING

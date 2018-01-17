@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="form.api.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="html.tpl.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="image.gd.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="language.api.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="maintenance-page.tpl.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="page.tpl.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="region.tpl.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.admin-rtl.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.admin.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.admin.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.api.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.archiver.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.base-rtl.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.base.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.cron.js" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.info" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425434490000000" remote="131425434490000000" Dst="2" />
+<file name="system.install" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.js" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.mail.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.maintenance.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.menus-rtl.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.menus.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.messages-rtl.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.messages.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.module" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.queue.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.tar.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.theme-rtl.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.theme.css" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.tokens.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="system.updater.inc" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="theme.api.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+</dwsync>

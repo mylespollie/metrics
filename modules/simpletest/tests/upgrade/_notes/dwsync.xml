@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="drupal-6.bare.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.comments.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.duplicate-permission.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.filled.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.forum.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.locale.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.menu.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.node_type_broken.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.translatable.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.trigger.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.upload.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.user-no-password-token.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-6.user-password-token.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.aggregator.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.bare.minimal.database.php.gz" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.bare.standard_all.database.php.gz" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.field.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.filled.minimal.database.php.gz" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.filled.standard_all.database.php.gz" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="drupal-7.trigger.database.php" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="update.aggregator.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="update.field.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="update.trigger.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="update.user.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.comment.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.filter.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.forum.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.locale.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.menu.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.node.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.poll.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.taxonomy.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.translatable.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.trigger.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.upload.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+<file name="upgrade.user.test" server="sftp.itd.umich.edu//afs/umich.edu/group/m/metrcdru/" local="131425428180000000" remote="131425428180000000" Dst="2" />
+</dwsync>
