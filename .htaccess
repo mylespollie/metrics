@@ -151,6 +151,14 @@ DirectoryIndex index.php index.html index.htm
   </IfModule>
 </IfModule>
 
+
+#added so human-created folders bounce back to Drupal 
+RewriteCond %{REQUEST_URI} ^/login/?$ 
+RewriteRule ^ /index.php [L] 
+
+
+
+
 # Add headers to all responses.
 <IfModule mod_headers.c>
   # Disable content sniffing, since it's an attack vector.
