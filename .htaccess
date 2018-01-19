@@ -156,9 +156,6 @@ DirectoryIndex index.php index.html index.htm
 RewriteCond %{REQUEST_URI} ^/login/?$ 
 RewriteRule ^ /index.php [L] 
 
-
-
-
 # Add headers to all responses.
 <IfModule mod_headers.c>
   # Disable content sniffing, since it's an attack vector.
