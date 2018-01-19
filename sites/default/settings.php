@@ -249,10 +249,10 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'metricsdrupaldev',
-      'username' => 'metricsdrupaldev',
-      'password' => 'sigh348DEV.Edibles',
-      'host' => 'webapps-db-dev.web.itd.umich.edu',
+      'database' => 'metricsdrupal',
+      'username' => 'metricsdrupal',
+      'password' => 'sigh348.Edibles',
+      'host' => 'itsapps2-db.miserver.it.umich.edu',
       'port' => '',
       'driver' => 'mysql',
       'prefix' => '',
