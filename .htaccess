@@ -129,11 +129,6 @@ DirectoryIndex index.php index.html index.htm
   RewriteCond %{REQUEST_URI} !cosign/valid
   RewriteRule ^ index.php [L]
   
-  RewriteCond %{REQUEST_URI} ^/be-aware/?$
-  RewriteRule ^ index.php [L]
-
-  RewriteCond %{REQUEST_URI} ^/be-aware/phishing-and-suspicious-email//?$
-  RewriteRule ^ index.php [L]
 
   # Rules to correctly serve gzip compressed CSS and JS files.
   # Requires both mod_rewrite and mod_headers to be enabled.
@@ -165,26 +160,6 @@ DirectoryIndex index.php index.html index.htm
  RewriteCond %{REQUEST_URI} ^/login/?$ 
  RewriteRule ^ /index.php [L] 
 
- RewriteCond %{REQUEST_URI} ^/executive-updates/?$ 
- RewriteRule ^ /index.php [L] 
-
- RewriteCond %{REQUEST_URI} ^/groups/?$ 
- RewriteRule ^ /index.php [L] 
-
- RewriteCond %{REQUEST_URI} ^/dataguide/login/?$ 
- RewriteRule ^ /index.php [L] 
-
- RewriteCond %{REQUEST_URI} ^/exam/?$ 
- RewriteRule ^ /index.php [L] 
-
- RewriteCond %{REQUEST_URI} ^/phishing-and-suspicious-email/?$ 
- RewriteRule ^ /index.php [L] 
-
- RewriteCond %{REQUEST_URI} ^/exam/quiz/?$ 
- RewriteRule ^ /index.php [L] 
- 
- RewriteCond %{REQUEST_URI} ^/exam/2016?$ 
- RewriteRule ^ /index.php [L] 
 
 # Add headers to all responses.
 <IfModule mod_headers.c>
