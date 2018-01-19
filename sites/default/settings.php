@@ -243,6 +243,7 @@
  *     'database' => '/path/to/databasefilename',
  *   );
  * @endcode
+ * pointless comment here to make git push this file to repo
  */
 $databases = array (
   'default' => 
